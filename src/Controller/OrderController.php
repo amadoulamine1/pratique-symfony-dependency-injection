@@ -23,9 +23,9 @@ class OrderController
         $this->texter = $texter;
     }
 
-    public function setSecondaryMailer(MailerInterface $mailer){
-        $this->secondaryMailer=$mailer;
-    }
+  //  public function setSecondaryMailer(MailerInterface $mailer){
+  //      $this->secondaryMailer=$mailer;
+  //  }
     public function placeOrder()
     {
         $order = new Order($_POST['product'], (int) $_POST['quantity']);
@@ -49,6 +49,9 @@ class OrderController
     public function sayHello(string $message, int $nombre){
         var_dump("Hello $message  $nombre de fois");
     }
-
+    public function setSecondaryMailer(MailerInterface $mailer){
+        var_dump("Hello ici de fois");
+        $this-> secondaryMailer=$mailer;
+    }
     
 }

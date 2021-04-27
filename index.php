@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 require __DIR__ . '/vendor/autoload.php';
 $container = new ContainerBuilder();
+/*
 $databaseDefinition = new Definition(Database::class);
 
 
@@ -55,6 +56,37 @@ $container->setDefinition('order_controller',$controllerDefinition);
 //$mailer = new GmailMailer("lior@gmail.com", "123456");
 //$mailer = $container->get('mailer.gmail');
 //$controller = new OrderController($database, $mailer, $texter);
+*/
+
+$container
+    ->register('order_controller', OrderController::class)
+    ->setArguments([
+        new Reference('database'),
+        new Reference('mailer.gmail'),
+        new Reference('texter.sms')
+    ])
+    ->addMethodCall('sayHello',[
+        'martin matin',
+        9
+    ])
+    ->addMethodCall('setSecondaryMailer',[
+        new Reference('mailer.gmail')
+    ]);
+$container->register('database', Database::class);
+
+$container
+    ->register('texter.sms', SmsTexter::class)
+    ->setArguments([
+        "service.sms.com",
+        "apikey123"
+    ]);
+
+$container
+    ->register('mailer.gmail', GmailMailer::class)
+    ->setArguments([
+        "amadoulamine1@gmail.com",
+        "123456"
+    ]);
 
 $controller= $container->get('order_controller');
 
