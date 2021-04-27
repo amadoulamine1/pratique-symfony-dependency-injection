@@ -6,6 +6,7 @@ use App\Mailer\GmailMailer;
 use App\Texter\SmsTexter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 require __DIR__ . '/vendor/autoload.php';
 $container = new ContainerBuilder();
@@ -28,9 +29,12 @@ $mailerGmailDefinition->setArguments([
 $container->setDefinition('mailer.gmail',$mailerGmailDefinition);
 
 $controllerDefinition = new Definition(OrderController::class,[
-    $container->get('database'),
-    $container->get('mailer.gmail'),
-    $container->get('texter.sms')
+    //$container->get('database'),
+    //$container->get('mailer.gmail'),
+    //$container->get('texter.sms')
+    new Reference('database'),
+    new Reference('mailer.gmail'),
+    new Reference('texter.sms')
 ]);
 $container->setDefinition('order_controller',$controllerDefinition);
 //$database = $container->get('database');
