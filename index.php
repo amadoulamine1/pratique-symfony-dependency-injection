@@ -12,6 +12,24 @@ require __DIR__ . '/vendor/autoload.php';
 $container = new ContainerBuilder();
 $databaseDefinition = new Definition(Database::class);
 
+
+$controllerDefinition = new Definition(OrderController::class,[
+    //$container->get('database'),
+    //$container->get('mailer.gmail'),
+    //$container->get('texter.sms')
+    new Reference('database'),
+    new Reference('mailer.gmail'),
+    new Reference('texter.sms')
+]);
+
+    $controllerDefinition
+        ->addMethodCall('sayHello',[
+            'martin matin',
+            9
+        ])
+        ->addMethodCall('secondaryMethodCall',[
+            new Reference('mailer.gmail')
+        ]);
 //$container->set('database', new Database());
 $container->setDefinition('database',$databaseDefinition);
 
@@ -28,14 +46,7 @@ $mailerGmailDefinition->setArguments([
 ]);
 $container->setDefinition('mailer.gmail',$mailerGmailDefinition);
 
-$controllerDefinition = new Definition(OrderController::class,[
-    //$container->get('database'),
-    //$container->get('mailer.gmail'),
-    //$container->get('texter.sms')
-    new Reference('database'),
-    new Reference('mailer.gmail'),
-    new Reference('texter.sms')
-]);
+
 $container->setDefinition('order_controller',$controllerDefinition);
 //$database = $container->get('database');
 //$database = new Database();

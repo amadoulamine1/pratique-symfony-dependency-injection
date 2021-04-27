@@ -14,6 +14,7 @@ class OrderController
     protected $texter;
     protected $mailer;
     protected $database;
+    protected $secondaryMailer;
 
     public function __construct(Database $database, MailerInterface $mailer, TexterInterface $texter)
     {
@@ -22,6 +23,9 @@ class OrderController
         $this->texter = $texter;
     }
 
+    public function setSecondaryMailer(MailerInterface $mailer){
+        $this->secondaryMailer=$mailer;
+    }
     public function placeOrder()
     {
         $order = new Order($_POST['product'], (int) $_POST['quantity']);
@@ -41,4 +45,10 @@ class OrderController
 
         $this->texter->send($textMessage);
     }
+
+    public function sayHello(string $message, int $nombre){
+        var_dump("Hello $message  $nombre de fois");
+    }
+
+    
 }
