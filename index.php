@@ -2,6 +2,7 @@
 
 use App\Controller\OrderController;
 use App\Database\Database;
+use App\DependencyInjection\LoggerCompilerPass;
 use App\Logger;
 use App\Mailer\GmailMailer;
 use App\Mailer\SmtpMailer;
@@ -32,7 +33,7 @@ $container
  $container->autowire('database', Database::class);
 //  ->register('database', Database::class)
 //  ->setAutowired(true);
-
+ 
 $container->autowire('logger', Logger ::class);
 $container->autowire('texter.sms', SmsTexter::class)
     // ->register('texter.sms', SmsTexter::class)
@@ -73,6 +74,7 @@ $container->setAlias('App\Texter\SmsTexter','texter.sms');
 $container->setAlias('App\Texter\TexterInterface','texter.sms');
 $container->setAlias('App\Logger','logger');
 
+$container->addCompilerPass(new LoggerCompilerPass); 
 $container->compile();
 
 var_dump("error");
