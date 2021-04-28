@@ -2,6 +2,7 @@
 
 use App\Controller\OrderController;
 use App\Database\Database;
+use App\Logger;
 use App\Mailer\GmailMailer;
 use App\Mailer\SmtpMailer;
 use App\Texter\SmsTexter;
@@ -32,15 +33,22 @@ $container
 //  ->register('database', Database::class)
 //  ->setAutowired(true);
 
+$container->autowire('logger', Logger ::class);
 $container->autowire('texter.sms', SmsTexter::class)
     // ->register('texter.sms', SmsTexter::class)
     // ->setAutowired(true)
-    ->setArguments(["service.sms.com","apikey123"]);
+    ->setArguments(["service.sms.com","apikey123"]) 
+    ->addMethodCall('setLogger',[
+        new Reference('logger')
+    ]);
 
  $container->autowire('mailer.gmail', GmailMailer::class)
     //  ->register('mailer.gmail', GmailMailer::class)
     //  ->setAutowired(true)
-     ->setArguments(["%mailer.gmail_user%'","%mailer.gmail_password%"]);
+     ->setArguments(["%mailer.gmail_user%'","%mailer.gmail_password%"])
+     ->addMethodCall('setLogger',[
+        new Reference('logger')
+    ]);
 
 $container->autowire('mailer.smtp', SmtpMailer::class)
     // ->register('mailer.smtp', SmtpMailer::class)
@@ -63,6 +71,7 @@ $container->setAlias('App\Mailer\MailerInterface','mailer.gmail');
 $container->setAlias('App\Texter\SmsTexter','texter.sms');
  $container->setAlias('App\Texter\FaxTexter','texter.fax');
 $container->setAlias('App\Texter\TexterInterface','texter.sms');
+$container->setAlias('App\Logger','logger');
 
 $container->compile();
 
