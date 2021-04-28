@@ -4,6 +4,7 @@ use App\Controller\OrderController;
 use App\Database\Database;
 use App\Mailer\GmailMailer;
 use App\Texter\SmsTexter;
+use App\Texter\TexterInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -93,13 +94,22 @@ $container
         "%mailer.gmail_password%"
     ]);
 
-$container->setAlias('App\Database\Database','database');
-$container->setAlias('App\Mailer\GmailMailer','mailer.gmail');
 $container->setAlias('App\Controller\OrderController','order_controller');
+$container->setAlias('App\Database\Database','database');
+    
+$container->setAlias('App\Mailer\GmailMailer','mailer.gmail');
+$container->setAlias('App\Texter\SmtpMailer','mailer.smtp');
+$container->setAlias('App\Texter\MailerInterface','mailer.gmail');
+
 $container->setAlias('App\Texter\SmsTexter','texter.sms');
+$container->setAlias('App\Texter\FaxTexter','texter.fax');
+$container->setAlias('App\Texter\TexterInterface','texter.sms');
+
 
 //$controller= $container->get('order_controller');
 $controller= $container->get(OrderController::class);
+
+$texter = $container->get(TexterInterface::class);
 
 //var_dump($container->get('mailer.gmail'));
 $httpMethod = $_SERVER['REQUEST_METHOD'];
