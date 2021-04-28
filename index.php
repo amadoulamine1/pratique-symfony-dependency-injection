@@ -94,7 +94,7 @@ $container
         "%mailer.gmail_password%"
     ]);
 
-$container->setAlias('App\Controller\OrderController','order_controller');
+$container->setAlias('App\Controller\OrderController','order_controller')->setPublic(true);
 $container->setAlias('App\Database\Database','database');
     
 $container->setAlias('App\Mailer\GmailMailer','mailer.gmail');
@@ -105,11 +105,12 @@ $container->setAlias('App\Texter\SmsTexter','texter.sms');
 $container->setAlias('App\Texter\FaxTexter','texter.fax');
 $container->setAlias('App\Texter\TexterInterface','texter.sms');
 
+$ontainer->compile();
 
 //$controller= $container->get('order_controller');
 $controller= $container->get(OrderController::class);
 
-$texter = $container->get(TexterInterface::class);
+//$texter = $container->get(TexterInterface::class);
 
 //var_dump($container->get('mailer.gmail'));
 $httpMethod = $_SERVER['REQUEST_METHOD'];
