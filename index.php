@@ -39,17 +39,19 @@ $container->autowire('texter.sms', SmsTexter::class)
     // ->register('texter.sms', SmsTexter::class)
     // ->setAutowired(true)
     ->setArguments(["service.sms.com","apikey123"]) 
-    ->addMethodCall('setLogger',[
-        new Reference('logger')
-    ]);
+    // ->addMethodCall('setLogger',[
+    //     new Reference('logger')
+    // ])
+    ;
 
  $container->autowire('mailer.gmail', GmailMailer::class)
     //  ->register('mailer.gmail', GmailMailer::class)
     //  ->setAutowired(true)
      ->setArguments(["%mailer.gmail_user%'","%mailer.gmail_password%"])
-     ->addMethodCall('setLogger',[
-        new Reference('logger')
-    ]);
+    //  ->addMethodCall('setLogger',[
+    //     new Reference('logger')
+    // ])
+    ;
 
 $container->autowire('mailer.smtp', SmtpMailer::class)
     // ->register('mailer.smtp', SmtpMailer::class)
