@@ -7,14 +7,24 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
 class LoggerCompilerPass implements CompilerPassInterface{
+    
     public function process(ContainerBuilder $container){
-        $definitions = $container->getDefinitions();
-       
-       foreach ($definitions as $id=> $definition){
+       // $definitions = $container->getDefinitions();
+       $ids = $container->findTaggedServiceIds('with_logger');
+
+       /*foreach ($definitions as $id=> $definition){
             if($id === 'texter.sms'|| $id ===  'mailer.gmail'){
                 $definition->addMethodCall('setLogger', [new Reference('logger')]); 
             }
-       }
-       // var_dump($definitions);
-    }
+            
+       }*/
+
+       foreach ($ids as $id=> $data){
+            $definition = $container->getDefinition($id);
+            $definition->addMethodCall('setLogger', [new Reference('logger')]); 
+        }
+        // var_dump($definitions);
+   }
+       
+  //  }
 }
