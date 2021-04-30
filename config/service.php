@@ -18,9 +18,10 @@ return function (ContainerConfigurator $configurator){
         ->set('mailer.gmail_password','123456');
 
     $services = $configurator->services();
+    $services->defaults->autowire(true);
     $services
         ->set('order_controller', OrderController::class)
-        ->autowire(true)
+       //->autowire(true)
         ->public()
         ->call('sayHello',[
             'martin matin',
@@ -29,26 +30,26 @@ return function (ContainerConfigurator $configurator){
         ->call('setSecondaryMailer',[ref('mailer.gmail')])
 
         ->set('database', Database::class)
-        ->autowire(true)
+        //->autowire(true)
 
         ->set('logger', Logger ::class)
-        ->autowire(true)
+        // ->autowire(true)
     
         ->set('texter.sms', SmsTexter::class)
-        ->autowire(true)
+        // ->autowire(true)
         ->args(["service.sms.com","apikey123"])
         ->tag('with_logger')
 
         ->set('texter.fax', FaxTexter::class)
-        ->autowire(true)
+        // ->autowire(true)
 
         ->set('mailer.gmail', GmailMailer::class)
-        ->autowire(true)
+        // ->autowire(true)
         ->args(["%mailer.gmail_user%'","%mailer.gmail_password%"])
         ->tag('with_logger')
 
         ->set('mailer.smtp', SmtpMailer::class)
-        ->autowire(true)
+        // ->autowire(true)
         ->args(['smtp://localhost','root','1234'])
 
         ->alias('App\Controller\OrderController','order_controller')
