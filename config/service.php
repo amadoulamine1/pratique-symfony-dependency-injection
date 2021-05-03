@@ -18,52 +18,52 @@ return function (ContainerConfigurator $configurator){
         ->set('mailer.gmail_password','123456');
 
     $services = $configurator->services();
-    $services->defaults->autowire(true);
-    $services
-        ->set('order_controller', OrderController::class)
-       //->autowire(true)
-        ->public()
-        ->call('sayHello',[
-            'martin matin',
-            9
-        ])
-        ->call('setSecondaryMailer',[ref('mailer.gmail')])
+//    $services->defaults->autowire(true);
+   // $services
+    //     ->set('order_controller', OrderController::class)
+    //    ->autowire(true)
+    //     ->public()
+    //     ->call('sayHello',[
+    //         'martin matin',
+    //         9
+    //     ])
+    //     ->call('setSecondaryMailer',[ref('mailer.gmail')])
 
-        ->set('database', Database::class)
-        //->autowire(true)
+    //     ->set('database', Database::class)
+    //     //->autowire(true)
 
-        ->set('logger', Logger ::class)
-        // ->autowire(true)
+        // ->set('logger', Logger ::class)
+        // // ->autowire(true)
     
-        ->set('texter.sms', SmsTexter::class)
-        // ->autowire(true)
-        ->args(["service.sms.com","apikey123"])
-        ->tag('with_logger')
+        // ->set('texter.sms', SmsTexter::class)
+        // // ->autowire(true)
+        // ->args(["service.sms.com","apikey123"])
+        // ->tag('with_logger')
 
-        ->set('texter.fax', FaxTexter::class)
-        // ->autowire(true)
+        // ->set('texter.fax', FaxTexter::class)
+        // // ->autowire(true)
 
-        ->set('mailer.gmail', GmailMailer::class)
-        // ->autowire(true)
-        ->args(["%mailer.gmail_user%'","%mailer.gmail_password%"])
-        ->tag('with_logger')
+        // ->set('mailer.gmail', GmailMailer::class)
+        // // ->autowire(true)
+        // ->args(["%mailer.gmail_user%'","%mailer.gmail_password%"])
+        // ->tag('with_logger')
 
-        ->set('mailer.smtp', SmtpMailer::class)
-        // ->autowire(true)
-        ->args(['smtp://localhost','root','1234'])
+        // ->set('mailer.smtp', SmtpMailer::class)
+        // // ->autowire(true)
+        // ->args(['smtp://localhost','root','1234'])
 
-        ->alias('App\Controller\OrderController','order_controller')
-        ->public()
-        ->alias('App\Database\Database','database')
+        // ->alias('App\Controller\OrderController','order_controller')
+        // ->public()
+        // ->alias('App\Database\Database','database')
     
-        ->alias('App\Mailer\GmailMailer','mailer.gmail')
-        ->alias('App\Texter\SmtpMailer','mailer.smtp')
-        ->alias('App\Mailer\MailerInterface','mailer.gmail')
+        // ->alias('App\Mailer\GmailMailer','mailer.gmail')
+        // ->alias('App\Texter\SmtpMailer','mailer.smtp')
+        // ->alias('App\Mailer\MailerInterface','mailer.gmail')
 
-        ->alias('App\Texter\SmsTexter','texter.sms')
-        ->alias('App\Texter\FaxTexter','texter.fax')
-        ->alias('App\Texter\TexterInterface','texter.sms')
-        ->alias('App\Logger','logger');
+        // ->alias('App\Texter\SmsTexter','texter.sms')
+        // ->alias('App\Texter\FaxTexter','texter.fax')
+        // ->alias('App\Texter\TexterInterface','texter.sms')
+        // ->alias('App\Logger','logger');
     
 };
     // $container

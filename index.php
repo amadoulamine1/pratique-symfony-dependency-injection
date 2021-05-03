@@ -1,24 +1,28 @@
 <?php
 
-use App\Controller\OrderController;
-use App\Database\Database;
-use App\DependencyInjection\LoggerCompilerPass;
 use App\Logger;
-use App\Mailer\GmailMailer;
-use App\Mailer\SmtpMailer;
 use App\Texter\SmsTexter;
+use App\Database\Database;
+use App\Mailer\SmtpMailer;
+use App\Mailer\GmailMailer;
+use App\Controller\OrderController;
 use Symfony\Component\Config\FileLocator;
+use App\DependencyInjection\LoggerCompilerPass;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 require __DIR__ . '/vendor/autoload.php';
 
 
 $container = new ContainerBuilder();
 
-$loader= new PhpFileLoader($container,new FileLocator([__DIR__ . '/config']));
-$loader-> load('service.php');
+// $loader= new PhpFileLoader($container,new FileLocator([__DIR__ . '/config']));
+// $loader-> load('service.php');
+$loader= new YamlFileLoader($container,new FileLocator([__DIR__ . '/config']));
+$loader-> load('service.yml');
+
 
 $container->addCompilerPass(new LoggerCompilerPass); 
 $container->compile();
